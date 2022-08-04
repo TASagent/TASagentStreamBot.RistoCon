@@ -31,7 +31,7 @@ builder.Services
 
 //Core Agnostic Systems
 builder.Services
-    .AddTASSingleton(TASagentTwitchBot.Core.Config.BotConfiguration.GetConfig())
+    .AddTASSingleton(TASagentTwitchBot.Core.Config.BotConfiguration.GetConfig(GetDefaultBotConfig()))
     .AddTASSingleton<TASagentTwitchBot.Core.StandardConfigurator>()
     .AddTASSingleton<TASagentTwitchBot.Core.CommunicationHandler>()
     .AddTASSingleton<TASagentTwitchBot.Core.View.BasicView>()
@@ -78,7 +78,7 @@ builder.Services
 
 //Custom Notification
 builder.Services
-    .AddTASSingleton(TASagentTwitchBot.Core.Notifications.ScriptedActivityProvider.ScriptedNotificationConfig.GetConfig())
+    .AddTASSingleton(TASagentTwitchBot.Core.Notifications.ScriptedActivityProvider.ScriptedNotificationConfig.GetConfig(GetDefaultNotificationConfig()))
     .AddTASSingleton<TASagentTwitchBot.Core.Notifications.ScriptedActivityProvider>();
 
 //Core Audio System
@@ -118,7 +118,7 @@ builder.Services
 
 //Core Local TTS System
 builder.Services
-    .AddTASSingleton(TASagentTwitchBot.Core.TTS.TTSConfiguration.GetConfig())
+    .AddTASSingleton(TASagentTwitchBot.Core.TTS.TTSConfiguration.GetConfig(GetDefaultTTSConfig()))
     .AddTASSingleton<TASagentTwitchBot.Core.TTS.TTSRenderer>()
     .AddTASSingleton<TASagentTwitchBot.Core.TTS.TTSSystem>()
     .AddTASSingleton<TASagentTwitchBot.Core.TTS.TTSWebRequestHandler>()
@@ -226,6 +226,9 @@ app.MapHub<TASagentTwitchBot.Core.Web.Hubs.TimerHub>("/Hubs/Timer");
 //Core Emote Effect Overlay Hub
 app.MapHub<TASagentTwitchBot.Core.Web.Hubs.EmoteHub>("/Hubs/Emote");
 
+//Core Tiltify Donation Hub
+app.MapHub<TASagentTwitchBot.Core.Web.Hubs.DonationHub>("/Hubs/Donation");
+
 
 await app.StartAsync();
 
@@ -289,3 +292,59 @@ catch (Exception ex)
 //
 
 await app.StopAsync();
+
+
+static TASagentTwitchBot.Core.Config.BotConfiguration GetDefaultBotConfig() =>
+    new TASagentTwitchBot.Core.Config.BotConfiguration()
+    {
+        //Disable Mic
+        MicConfiguration = new TASagentTwitchBot.Core.Config.MicConfiguration()
+        {
+            Enabled = false
+        },
+
+        //Disable help and error handling
+        CommandConfiguration = new TASagentTwitchBot.Core.Config.CommandConfiguration()
+        {
+            HelpEnabled = false,
+            GlobalErrorHandlingEnabled = false
+        },
+
+        //Set level 1 and 2 clearance password hashes to garbage
+        AuthConfiguration = new TASagentTwitchBot.Core.Config.AuthConfiguration()
+        {
+            Privileged = new TASagentTwitchBot.Core.Config.CredentialSet()
+            {
+                PasswordHash = TASagentTwitchBot.Core.Cryptography.HashPassword(Guid.NewGuid().ToString())
+            },
+            User = new TASagentTwitchBot.Core.Config.CredentialSet()
+            {
+                PasswordHash = TASagentTwitchBot.Core.Cryptography.HashPassword(Guid.NewGuid().ToString())
+            }
+        }
+    };
+
+static TASagentTwitchBot.Core.TTS.TTSConfiguration GetDefaultTTSConfig() =>
+    new TASagentTwitchBot.Core.TTS.TTSConfiguration()
+    {
+        //Disable TTS Command
+        Command = new TASagentTwitchBot.Core.TTS.TTSConfiguration.CommandConfiguration()
+        {
+            Enabled = false,
+            AllowGetTTS = false,
+            RespondOnRejection = false
+        },
+
+        BitThreshold = 100_000
+    };
+
+static TASagentTwitchBot.Core.Notifications.ScriptedActivityProvider.ScriptedNotificationConfig GetDefaultNotificationConfig() =>
+    new TASagentTwitchBot.Core.Notifications.ScriptedActivityProvider.ScriptedNotificationConfig()
+    {
+        SubNotificationEnabled = false,
+        CheerNotificationEnabled = false,
+        RaidNotificationEnabled = false,
+        GiftSubNotificationEnabled = false,
+        AnonGiftSubNotificationEnabled = false,
+        FollowNotificationEnabled = false
+    };

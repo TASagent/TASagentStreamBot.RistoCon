@@ -102,6 +102,7 @@ public class CustomDonationHandler : Core.Donations.IDonationHandler
         string message)
     {
         Core.Audio.AudioRequest? soundEffectRequest = null;
+        Core.Audio.AudioRequest? ttsAnnouncement;
         Core.Audio.AudioRequest? ttsRequest = null;
 
         if (soundEffectSystem.HasSoundEffects())
@@ -119,6 +120,14 @@ public class CustomDonationHandler : Core.Donations.IDonationHandler
             }
         }
 
+        ttsAnnouncement = await ttsRenderer.TTSRequest(
+            authorizationLevel: Core.Commands.AuthorizationLevel.Admin,
+            voicePreference: "Brian",
+            pitchPreference: Core.TTS.TTSPitch.Medium,
+            speedPreference: Core.TTS.TTSSpeed.Medium,
+            effectsChain: new Core.Audio.Effects.NoEffect(),
+            ttsText: $"{name} has donated {amount:c}.");
+
         if (!string.IsNullOrWhiteSpace(message))
         {
             ttsRequest = await ttsRenderer.TTSRequest(
@@ -130,7 +139,7 @@ public class CustomDonationHandler : Core.Donations.IDonationHandler
                 ttsText: message);
         }
 
-        return Core.Audio.AudioTools.JoinRequests(300, soundEffectRequest, ttsRequest);
+        return Core.Audio.AudioTools.JoinRequests(300, soundEffectRequest, ttsAnnouncement, ttsRequest);
     }
 
     protected virtual Task<string?> GetDonationMarqueeMessage(

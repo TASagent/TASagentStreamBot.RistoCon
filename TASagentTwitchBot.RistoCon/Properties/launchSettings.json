@@ -2,7 +2,8 @@
   "profiles": {
     "TASagentStreamBot.RistoCon": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "dotnetRunMessages": "true",
+      "launchBrowser": false,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
