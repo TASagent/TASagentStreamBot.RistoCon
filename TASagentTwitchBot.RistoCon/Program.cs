@@ -196,15 +196,6 @@ app.UseStaticFiles();
 //Core Web Assets
 app.UseCoreLibraryContent("TASagentTwitchBot.Core");
 
-//Controllerspy Assets
-app.UseCoreLibraryContent("TASagentTwitchBot.Plugin.ControllerSpy");
-
-//TTTAS Assets
-app.UseCoreLibraryContent("TASagentTwitchBot.Plugin.TTTAS");
-
-//Quote Assets
-app.UseCoreLibraryContent("TASagentTwitchBot.Plugin.Quotes");
-
 //Authentication Middleware
 app.UseMiddleware<TASagentTwitchBot.Core.Web.Middleware.AuthCheckerMiddleware>();
 
