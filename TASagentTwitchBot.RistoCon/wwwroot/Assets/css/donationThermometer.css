@@ -23,7 +23,6 @@
 }
 
 #thermometer {
-    position: relative;
     top: 0px;
     left: 0px;
     height: 100%;
@@ -34,10 +33,19 @@
 }
 
 #thermometerMask {
-    position: relative;
+    position: absolute;
     top: 0px;
     left: 0px;
     height: 100%;
     width: 100%;
-    background: rgb(0, 0, 0);
+    background: rgb(50, 50, 50);
+}
+
+#thermometerGrowthMask {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    background: rgb(255, 255, 255);
 }
