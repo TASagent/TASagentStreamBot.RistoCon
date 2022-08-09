@@ -15,19 +15,46 @@
 
 #thermContainer {
     position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    background: rgb(0, 0, 0);
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    background: rgba(0, 0, 0, 0);
+}
+
+#thermometerBGColorizer {
+    position: absolute;
+    top: 10px;
+    left: 0px;
+    right: 0px;
+    bottom: 10px;
+    background: linear-gradient( rgba(100,2,2,1) 0%, rgba(100,2,2,1) 16.7%, rgba(100,60,0,1) 16.7%, rgba(100,60,0,1) 33.3%, rgba(100,100,0,1) 33.3%, rgba(100,100,0,1) 50%, rgba(0,55,15,1) 50%, rgba(0,55,15,1) 66.7%, rgba(15,25,60,1) 66.7%, rgba(15,25,60,1) 83.3%, rgba(50,16,55,1) 83.3%, rgba(50,16,55,1) 100%);
+}
+
+#thermometerBGTop {
+    position: absolute;
+    top: 0px;
+    height: 10px;
+    left: 0px;
+    right: 0px;
+    background: rgba(100,2,2,1);
+}
+
+#thermometerBGBottom {
+    position: absolute;
+    bottom: 0px;
+    height: 10px;
+    left: 0px;
+    right: 0px;
+    background: rgba(50,16,55,1);
 }
 
 #thermometer {
+    position: absolute;
     top: 0px;
     left: 0px;
     height: 100%;
     width: 100%;
-    position: absolute;
     background: rgb(228,3,3);
     background: linear-gradient( rgba(228,3,3,1) 0%, rgba(228,3,3,1) 16.7%, rgba(255,140,0,1) 16.7%, rgba(255,140,0,1) 33.3%, rgba(255,237,0,1) 33.3%, rgba(255,237,0,1) 50%, rgba(0,128,38,1) 50%, rgba(0,128,38,1) 66.7%, rgba(36,64,142,1) 66.7%, rgba(36,64,142,1) 83.3%, rgba(115,41,130,1) 83.3%, rgba(115,41,130,1) 100%);
 }
