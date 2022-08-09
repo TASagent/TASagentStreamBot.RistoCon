@@ -11,6 +11,5 @@ Follow the instructions in the [TASagentTwitchBotCore](https://github.com/TASage
 In OBS, add the following BrowserSources
 
 `http://localhost:5000/BrowserSource/overlay.html` - Image notifications (example size: 800px wide x 600px tall)  
-`http://localhost:5000/BrowserSource/timer.html` - Timer overlay (example size: 450px wide x 150px tall)  
-`http://localhost:5000/BrowserSource/ttsmarquee.html` - Scrolling TTS Marquee (example size: 1920px wide x 60px tall)  
-`http://localhost:5000/BrowserSource/emoteRain.html` - Raining Emote effect (example size: 1920px wide x 1080px tall)  
+`http://localhost:5000/BrowserSource/donationThermometer.html` - Donation meter showing progress to fundraising goal (example size: 50px wide x 600px tall)  
+`http://localhost:5000/BrowserSource/donations.html` - Cumulative text donation display (example size: 800px wide x 120px tall)  
