@@ -2,8 +2,12 @@
 
 using TASagentTwitchBot.Core.Notifications;
 
-
 namespace TASagentTwitchBot.RistoCon.Notifications;
+
+public interface IDonationListener
+{
+    void NotifyDonation(string name, double amount, string message);
+}
 
 public class CustomDonationHandler : Core.Donations.IDonationHandler
 {
@@ -17,6 +21,8 @@ public class CustomDonationHandler : Core.Donations.IDonationHandler
     private readonly Core.Donations.IDonationTracker donationTracker;
 
     private readonly INotificationImageHelper notificationImageHelper;
+
+    private readonly HashSet<IDonationListener> donationListeners = new HashSet<IDonationListener>();
 
     public CustomDonationHandler(
         Core.ICommunication communication,
@@ -36,6 +42,8 @@ public class CustomDonationHandler : Core.Donations.IDonationHandler
         this.notificationImageHelper = notificationImageHelper;
     }
 
+    public void RegisterListener(IDonationListener listener) => donationListeners.Add(listener);
+
     public async void HandleDonation(
         string name,
         double amount,
@@ -45,6 +53,11 @@ public class CustomDonationHandler : Core.Donations.IDonationHandler
         communication.NotifyEvent($"{name} Donation: {amount:c} - {message}");
 
         donationTracker.AddDirectDonations(amount);
+
+        foreach (IDonationListener listener in donationListeners)
+        {
+            listener.NotifyDonation(name, amount, message);
+        }
 
         string chatResponse = await GetDonationChatResponse(name, amount);
         if (!string.IsNullOrWhiteSpace(chatResponse))
@@ -71,7 +84,7 @@ public class CustomDonationHandler : Core.Donations.IDonationHandler
         }
         else
         {
-            return Task.FromResult($"Thanks for the donation Anonymous donation of {amount:c}!");
+            return Task.FromResult($"Thanks for the Anonymous donation of {amount:c}!");
         }
     }
 

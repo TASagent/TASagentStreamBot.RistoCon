@@ -158,6 +158,12 @@ builder.Services
 builder.Services
     .AddTASSingleton<TASagentTwitchBot.RistoCon.Notifications.CustomDonationHandler>();
 
+builder.Services
+    .AddTASSingleton(TASagentTwitchBot.RistoCon.API.RistoBubbles.RistoBubblesConfig.GetConfig())
+    .AddTASSingleton<TASagentTwitchBot.RistoCon.API.RistoBubbles.RistoBubblesHelper>()
+    .AddTASSingleton<TASagentTwitchBot.RistoCon.API.RistoBubbles.RistoBubblesManager>()
+    .AddTASSingleton<TASagentTwitchBot.RistoCon.API.RistoBubbles.RistoBubblesCommands>();
+
 //Routing
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
